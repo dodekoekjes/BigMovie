@@ -1,0 +1,33 @@
+
+# Created by Tristan Kruijshaar
+
+### Data ###
+*.csv
+*.dat
+*.efx
+*.gbr
+*.key
+*.pps
+*.ppt
+*.pptx
+*.sdf
+*.tax2010
+*.vcf
+*.xml
+*.list
+*.Rhistory
+
+### DataBase ###
+
+*.accdb
+*.db
+*.dbf
+*.mdb
+*.pdb
+*.sql
+*.sqlite3
+
+### Misc ###
+
+*.asta
+*.asta.lock
