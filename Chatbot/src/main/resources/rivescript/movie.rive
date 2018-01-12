@@ -161,6 +161,35 @@
 ! array yes        = yes yeah yep yup ya yea
 ! array no         = no nah nope nay
 
-//
 + test
 - Test reply
+
++ test image
+- <call>image Chatbot/src/resources/testimage.png Test image</call>
+
++ test sql
+- <call>sql SELECT COUNT(*) FROM movies</call>
+
++ (hi|hello|hey)
+- Hello!
+- Hi!
+- Hey!
+
++ /start
+- Hey! You can use /moviehelp to see what kind of movie questions I can answer.
+
++ /moviehelp
+- These are examples of questions I can answer:\n
+^* Which movies take place in New York?\n
+^* Which movies have the highest ratings with the lowest amount of votes?\n
+^* Give me a graph for the genres
+
++ /moviefact *
+@ <star>
+
++ /help
+@ /moviehelp
+
++ *
+- I didn't understand that.
+

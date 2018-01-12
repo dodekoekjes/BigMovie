@@ -11,9 +11,12 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Chatbot_main" />
     <orderEntry type="library" name="Gradle: org.rosuda.REngine:REngine:2.1.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.lucarosellini.rJava:JRIEngine:0.9-7" level="project" />
     <orderEntry type="library" name="Gradle: com.rivescript:rivescript-core:0.10.0" level="project" />
     <orderEntry type="library" name="Gradle: org.telegram:telegrambots:3.5" level="project" />
     <orderEntry type="library" name="Gradle: junit:junit:4.12" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.lucarosellini.rJava:JRI:0.9-7" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.lucarosellini.rJava:REngine:0.9-7" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.25" level="project" />
     <orderEntry type="library" name="Gradle: org.telegram:telegrambots-meta:3.5" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.8.7" level="project" />

@@ -1,25 +1,19 @@
 package com.groep2.Chatbot;
 
-import org.rosuda.REngine.REXPMismatchException;
-import org.rosuda.REngine.REngineException;
+
 import org.telegram.telegrambots.*;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
-import java.io.IOException;
-
 public class Main {
-    public static void main(String[] args) throws REXPMismatchException, REngineException {
+    public static void main(String[] args){
+        ApiContextInitializer.init();
 
-        RHandler rh = new RHandler("c(1,2,3,4,5)");
+        TelegramBotsApi botsApi = new TelegramBotsApi();
 
-//        ApiContextInitializer.init();
-//
-//        TelegramBotsApi botsApi = new TelegramBotsApi();
-//
-//        try {
-//            botsApi.registerBot(new Chatbot());
-//        } catch (TelegramApiException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            botsApi.registerBot(new Chatbot());
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
     }
 }

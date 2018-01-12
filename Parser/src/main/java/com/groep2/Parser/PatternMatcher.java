@@ -17,19 +17,12 @@ public class PatternMatcher {
 
         CSVWriter writer = new CSVWriter(filename);
         List<String> writeables;
-        String path = "Parser/resources/"+filename;
+        String path = "Parser/src/main/resources/"+filename;
 
         try {
             BufferedReader bufferreader = Files.newBufferedReader(Paths.get(path), StandardCharsets.ISO_8859_1);
             String line = bufferreader.readLine();
             int count=0;
-
-            //Zorgt dat bovenin x1,x2,x3 etc.. staat
-            //writeables = new ArrayList<>();
-            //for (int i = 0; i < groups.size(); i++){
-            //    writeables.add("x"+(i+1));
-            //}
-            //writer.Write(writeables);
 
             while (line != null) {
 
@@ -37,18 +30,12 @@ public class PatternMatcher {
                 Matcher matcher = pattern.matcher(line);
                 boolean matches = matcher.matches();
 
-                if (matches){
+                if (matches && !line.trim().equals("7: Copying Policy: Internet Movie Database (IMDb)")){
                      writeables = new ArrayList<>();
 
                     //Haal de correcte strings uit de match en zet ze in een lijstje
                     for (Integer group : groups) {
-                        if(filename=="locations.list"&&group==4){ //Locations.list heeft een speciale notatie nodig
-
-                            writeables.add("\""+matcher.group(group).trim()+"\"");
-                        }
-                        else{
-                            writeables.add(matcher.group(group).trim());
-                        }
+                        writeables.add(matcher.group(group).trim());
                     }
                     writer.Write(writeables);
                     count++;
@@ -79,17 +66,10 @@ public class PatternMatcher {
         List<String> writeables;
 
         try {
-            BufferedReader bufferreader = new BufferedReader(new FileReader("src/main/resources/"+filename));
+            BufferedReader bufferreader = new BufferedReader(new FileReader("Parser/src/main/resources/"+filename));
             String line = bufferreader.readLine();
             int count=0;
             boolean ignorenext=false;
-
-            //Zorgt dat bovenin x1,x2,x3 etc.. staat
-            //writeables = new ArrayList<>();
-            //for (int i = 0; i < 455; i++){
-            //    writeables.add("x"+(i+1));
-            //}
-            //writer.Write(writeables);
             writeables = new ArrayList<>();
 
             while (line != null) {

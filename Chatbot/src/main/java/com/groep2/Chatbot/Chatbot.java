@@ -7,11 +7,20 @@ import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
+/* RiveScript calls:
+    SQL query doen: sql [query]
+    Shell gebruiken: shell [commando]
+    Foto versturen: image [foto pad] [foto beschrijving - mag leeg zijn]
+ */
+
 public class Chatbot extends TelegramLongPollingBot {
     private RiveScript bot = new RiveScript(Config.utf8());
 
+    public Chatbot() {
 
-    Chatbot() {
+        bot.setSubroutine("sql", new SqlSubroutine("server.kevinswebsite.nl", 3306, "moviedatabase", "root", "fietsbel"));
+        bot.setSubroutine("shell", new ShellSubroutine());
+        bot.setSubroutine("image", new SendImageSubroutine(this));
         bot.loadDirectory("Chatbot/src/main/resources/rivescript");
         bot.sortReplies();
     }
@@ -31,7 +40,9 @@ public class Chatbot extends TelegramLongPollingBot {
                     .setChatId(chat_id)
                     .setText(reply);
             try {
-                execute(message); // Sending our message object to user
+                if (!reply.isEmpty()) {
+                    execute(message); // Sending our message object to user
+                }
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }

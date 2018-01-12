@@ -12,6 +12,7 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile group: 'org.rosuda.REngine', name: 'REngine', version: '2.1.0'
+    compile group: 'com.github.lucarosellini.rJava', name: 'JRIEngine', version: '0.9-7'
     compile group: 'com.rivescript', name: 'rivescript-core', version: '0.10.0'
     compile group: 'org.telegram', name: 'telegrambots', version: '3.5'
 }

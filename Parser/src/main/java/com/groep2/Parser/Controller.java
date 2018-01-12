@@ -7,16 +7,16 @@ import java.util.List;
 class Controller {
 
     boolean doPatternMatching = true;
-    boolean doDatabaseBuild = true;
+    boolean doDatabaseBuild = false;
 
     Controller() throws SQLException {
 
         //Je regular expression
         String regexRatings = "\\s+.{10}\\s+(\\d+)\\s+(.{3}|.{4})\\s+(.+?)\\(((.{4}).*?|)\\)(.+|)"; //1 = aantal stemmen, 2 = rating 3 = FilmNaam, 4 = releaseYear
         String regexSound = "(# (.+?)\\((.+?)\\)(.+|))|(- (.+))|#(\\s)";
-        String regexMovies = "(.*?) \\(([0-9\\?]{4})\\)(?:\\{\\{SUSPENDED\\}\\})?(?: \\((.*)\\))?(?:\\{(.*)\\})?\\s.*?([0-9?]{4})(?:-([0-9?]{4}))?";
-        String regexLocations = "(.*?) \\(([0-9?]{4})(?:\\/[VXIL]*)?\\)(?: \\(.*?\\))?(?: \\{(?:\\{SUSPENDED\\}|(.*?))?\\})?(?: \\{\\{SUSPENDED\\}\\})?\\s{1,6}(.*)";
-        String regexGenres = "(\\\")(.*)(\\\")(\\s*)\\((.*)\\)(\\s*)(}*)(\\s+)(.+)";
+        String regexMovies = "(.*?)\\s*\\((.{4,12}?)\\)(.*)(.{4})";
+        String regexLocations = "(.*?)\\s\\((.{4,12})\\)(\\s*)(\\(.{0,24}?\\)|)(\\{.*\\}|)(\\s*)(.*?\\b\\s\\(.*\\)|.*)";
+        String regexGenres = "(.*?)(\\s*)\\((.*?)\\)(\\s*)(\\(.*\\)|)(\\{.*\\}|)(.*)";
 
         //De naam van de list, list moet in resources.
         String ratingsFile =    "ratings.list";
@@ -27,9 +27,9 @@ class Controller {
 
         //De groepen uit je regular expression die hij in je CSV moet plaatsen
         List<Integer> ratingsGroups = Arrays.asList(1,2,3);
-        List<Integer> moviesGroups = Arrays.asList(1,2,5);
-        List<Integer> locationsGroups = Arrays.asList(1,2,4);
-        List<Integer> genresGroups = Arrays.asList(2,5,9);
+        List<Integer> moviesGroups = Arrays.asList(1,2,4);
+        List<Integer> locationsGroups = Arrays.asList(1,2,7);
+        List<Integer> genresGroups = Arrays.asList(1,3,7);
 
         if(doPatternMatching){
             PatternMatcher.Match(regexRatings, ratingsFile, ratingsGroups);

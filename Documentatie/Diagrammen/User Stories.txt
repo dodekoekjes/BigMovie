@@ -1,0 +1,5 @@
+Als gebruiker wil ik een chatbot kunnen raadplegen die mijn vragen kan beantwoorden.
+Als gebruiker wil ik een visuele weergave van het antwoord op mijn vraag.
+Als gebruiker wil ik een chatbot met een mooie interface.
+Als gebruiker wil ik een chatbot die makkelijk te gebruiken is.
+Als gebruiker wil ik mijn vragen in het Engels en in het Nederlands kunnen stellen.

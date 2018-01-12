@@ -16,7 +16,7 @@ public class CSVWriter {
 
     CSVWriter(String filename){
         filename = filename.substring(0, filename.length() - 5);
-        String location = "Parser/src/main/resources/output/"+filename+".csv";
+        String location = "Parser/src/main/resources/output/csv/"+filename+".csv";
 
         Path path = Paths.get(location);
 
@@ -31,10 +31,10 @@ public class CSVWriter {
         //Delete het oude bestand
         try {
             Files.delete(path);
-            System.out.println("Old file deleted.");
+            System.out.println("Old "+ filename +" deleted.");
         }
         catch (NoSuchFileException x) {
-            System.out.println("No old file found.");
+            System.out.println("No old"+ filename +"file found.");
         }
         catch (IOException x) {
             // File permission problems are caught here.
