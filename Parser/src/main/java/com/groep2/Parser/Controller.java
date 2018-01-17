@@ -1,5 +1,6 @@
 package com.groep2.Parser;
 
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
@@ -13,8 +14,8 @@ class Controller {
 
         //Je regular expression
         String regexRatings = "\\s+.{10}\\s+(\\d+)\\s+(.{3}|.{4})\\s+(.+?)\\(((.{4}).*?|)\\)(.+|)"; //1 = aantal stemmen, 2 = rating 3 = FilmNaam, 4 = releaseYear
-        String regexSound = "(# (.+?)\\((.+?)\\)(.+|))|(- (.+))|#(\\s)";
-        String regexMovies = "(.*?)\\s*\\((.{4,12}?)\\)(.*)(.{4})";
+        String regexSound = "(# (.+?)\\((.{4,18}?)\\)(.+|))|(- (.+))|#(\\s)";
+        String regexMovies = "(.*?) \\((.{4,12}?)\\)(.*)(.{4})";
         String regexLocations = "(.*?)\\s\\((.{4,12})\\)(\\s*)(\\(.{0,24}?\\)|)(\\{.*\\}|)(\\s*)(.*?\\b\\s\\(.*\\)|.*)";
         String regexGenres = "(.*?)(\\s*)\\((.*?)\\)(\\s*)(\\(.*\\)|)(\\{.*\\}|)(.*)";
 

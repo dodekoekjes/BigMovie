@@ -14,6 +14,7 @@
     <orderEntry type="library" name="Gradle: com.github.lucarosellini.rJava:JRIEngine:0.9-7" level="project" />
     <orderEntry type="library" name="Gradle: com.rivescript:rivescript-core:0.10.0" level="project" />
     <orderEntry type="library" name="Gradle: org.telegram:telegrambots:3.5" level="project" />
+    <orderEntry type="library" name="Gradle: mysql:mysql-connector-java:8.0.8-dmr" level="project" />
     <orderEntry type="library" name="Gradle: junit:junit:4.12" level="project" />
     <orderEntry type="library" name="Gradle: com.github.lucarosellini.rJava:JRI:0.9-7" level="project" />
     <orderEntry type="library" name="Gradle: com.github.lucarosellini.rJava:REngine:0.9-7" level="project" />

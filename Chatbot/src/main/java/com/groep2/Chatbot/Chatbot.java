@@ -11,17 +11,18 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
     SQL query doen: sql [query]
     Shell gebruiken: shell [commando]
     Foto versturen: image [foto pad] [foto beschrijving - mag leeg zijn]
+    R script runnen (nog niet getest): r [naam van r bestand in resources/R]
  */
 
 public class Chatbot extends TelegramLongPollingBot {
     private RiveScript bot = new RiveScript(Config.utf8());
 
     public Chatbot() {
-
-        bot.setSubroutine("sql", new SqlSubroutine("server.kevinswebsite.nl", 3306, "moviedatabase", "root", "fietsbel"));
-        bot.setSubroutine("shell", new ShellSubroutine());
-        bot.setSubroutine("image", new SendImageSubroutine(this));
-        bot.loadDirectory("Chatbot/src/main/resources/rivescript");
+        bot.setSubroutine("sql", new jar.SqlSubroutine("server.kevinswebsite.nl", 3306, "moviedatabase", "root", "fietsbel"));
+        bot.setSubroutine("shell", new jar.ShellSubroutine());
+        bot.setSubroutine("image", new jar.SendImageSubroutine(this));
+        bot.setSubroutine("r", new jar.RSubroutine());
+        bot.loadDirectory("Chatbot/resources/rivescript");
         bot.sortReplies();
     }
 

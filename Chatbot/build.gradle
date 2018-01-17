@@ -15,4 +15,5 @@ dependencies {
     compile group: 'com.github.lucarosellini.rJava', name: 'JRIEngine', version: '0.9-7'
     compile group: 'com.rivescript', name: 'rivescript-core', version: '0.10.0'
     compile group: 'org.telegram', name: 'telegrambots', version: '3.5'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.8-dmr'
 }

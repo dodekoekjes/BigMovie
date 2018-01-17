@@ -1,4 +1,4 @@
-package com.groep2.Chatbot;
+package jar;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -28,14 +28,17 @@ public class SendImageSubroutine implements Subroutine {
         caption = caption.trim();
         reply = new SendPhoto()
                 .setNewPhoto(new File(args[0]))
-                .setChatId(rs.currentUser())
-                .setCaption(caption);
+                .setChatId(rs.currentUser());
+        if (!caption.isEmpty()) {
+            reply.setCaption(caption);
+        }
         try {
             sender.sendPhoto(reply);
         }
         catch (TelegramApiException ex) {
             ex.printStackTrace();
         }
+        System.out.println("Sending image");
         return "";
     }
 }

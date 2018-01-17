@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,7 +18,7 @@ public class PatternMatcher {
 
         CSVWriter writer = new CSVWriter(filename);
         List<String> writeables;
-        String path = "Parser/src/main/resources/"+filename;
+        String path = "Parser/src/main/resources/lists/"+filename;
 
         try {
             BufferedReader bufferreader = Files.newBufferedReader(Paths.get(path), StandardCharsets.ISO_8859_1);
@@ -66,12 +67,11 @@ public class PatternMatcher {
         List<String> writeables;
 
         try {
-            BufferedReader bufferreader = new BufferedReader(new FileReader("Parser/src/main/resources/"+filename));
+            BufferedReader bufferreader = new BufferedReader(new FileReader("Parser/src/main/resources/lists/"+filename));
             String line = bufferreader.readLine();
             int count=0;
             boolean ignorenext=false;
             writeables = new ArrayList<>();
-
             while (line != null) {
 
                 Pattern pattern = Pattern.compile(regex);
@@ -79,7 +79,6 @@ public class PatternMatcher {
                 boolean matches = matcher.matches();
 
                 if (matches){
-
                     //System.out.println(line);
                     if (ignorenext){
                         ignorenext=false;
@@ -124,6 +123,5 @@ public class PatternMatcher {
         catch(IllegalStateException ex){
             System.out.println("No match found");
         }
-
     }
 }

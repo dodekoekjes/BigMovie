@@ -16,7 +16,7 @@ public class CSVWriter {
 
     CSVWriter(String filename){
         filename = filename.substring(0, filename.length() - 5);
-        String location = "Parser/src/main/resources/output/csv/"+filename+".csv";
+        String location = "Parser/src/main/resources/output/"+filename+".csv";
 
         Path path = Paths.get(location);
 

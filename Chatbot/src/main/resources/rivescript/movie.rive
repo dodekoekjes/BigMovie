@@ -164,11 +164,13 @@
 + test
 - Test reply
 
-+ test image
-- <call>image Chatbot/src/resources/testimage.png Test image</call>
++ rtest
+- <call>r test.r</call>
+- Making a graph...
+- <call>image Chatbot/resources/R/test.png</call>
 
-+ test sql
-- <call>sql SELECT COUNT(*) FROM movies</call>
++ test image
+- <call>image Chatbot/resources/rivescript/testimage.png Test image</call>
 
 + (hi|hello|hey)
 - Hello!
@@ -189,6 +191,9 @@
 
 + /help
 @ /moviehelp
+
++ which movies take place in *
+- <call>sql SELECT DISTINCT movietitle FROM locations WHERE fulllocation LIKE '%<star>%' LIMIT 10;</call>
 
 + *
 - I didn't understand that.

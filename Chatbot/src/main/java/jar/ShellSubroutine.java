@@ -1,4 +1,4 @@
-package com.groep2.Chatbot;
+package jar;
 
 import com.rivescript.macro.Subroutine;
 import com.rivescript.util.StringUtils;
