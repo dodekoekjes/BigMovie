@@ -1,8 +1,10 @@
-package jar;
+//--------------------------------------------------------------------------------------//
+// Deze pagina is gemaakt door Benjamin                                                 //
+//--------------------------------------------------------------------------------------//
+package subroutine;
 
 import com.rivescript.macro.Subroutine;
 import com.rivescript.util.StringUtils;
-import com.mysql.jdbc.*;
 
 import java.sql.*;
 
@@ -43,9 +45,11 @@ public class SqlSubroutine implements Subroutine {
                     if (result.equals("")) {
                         result = resultSet.getString(j);
                     } else {
-                        result += " " + resultSet.getString(j);
+                        result += "" + resultSet.getString(j);
                     }
                 }
+                if (!result.equals(""))
+                    result += "";
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

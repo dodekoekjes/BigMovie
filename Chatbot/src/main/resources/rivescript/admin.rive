@@ -1,0 +1,17 @@
+// Administrative functions.
+
++ shutdown{weight=10000}
+* <id> eq <bot master> => Shutting down... (j/k, not supported)
+- {@botmaster only}
+
++ botmaster only
+- This command can only be used by my botmaster. <id> != <bot master>
+
+> object setvar javascript
+    // Example of how to get the current user's ID and set
+    // variables for them.
+    uid   = rs.currentUser();
+    name  = args.shift();
+    value = args.join(" ");
+    rs.setUservar(uid, name, value);
+< object

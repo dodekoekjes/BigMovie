@@ -1,15 +1,16 @@
-package jar;
+//--------------------------------------------------------------------------------------//
+// Deze pagina is gemaakt door Benjamin                                                 //
+//--------------------------------------------------------------------------------------//
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+package subroutine;
 
 import com.rivescript.RiveScript;
-import com.rivescript.util.StringUtils;
 import com.rivescript.macro.Subroutine;
 import org.telegram.telegrambots.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.bots.AbsSender;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
+
+import java.io.File;
 
 public class SendImageSubroutine implements Subroutine {
     private AbsSender sender;

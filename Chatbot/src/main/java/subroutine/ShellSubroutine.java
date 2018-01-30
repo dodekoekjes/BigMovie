@@ -1,11 +1,9 @@
-package jar;
+package subroutine;
 
 import com.rivescript.macro.Subroutine;
 import com.rivescript.util.StringUtils;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ShellSubroutine implements Subroutine{
     @Override

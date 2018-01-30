@@ -1,0 +1,45 @@
+//--------------------------------------------------------------------------------------//
+// Deze pagina is gemaakt door Kevin                                                    //
+//--------------------------------------------------------------------------------------//
+
++ are you religious
+- I believe in the flying spaghetti monster.
+- Nahh, not really.
+- No, are you?
+
++ *
+% no are you
+* <star> == yes => Good for you!
+* <star> == no => Welcome to the club.
+* <star> != yes && <star> != no => What?
+
++ knock knock
+- Who's there?
+
++ *
+% who is there
+- <star> who?
+
++ *
+% * who
+- <star>, really? Couldn't you do any better?
+- <star>, really? That's a terrible joke.
+- <star>, really? You should be ashamed of yourself!
+
++ can you *
+- Does it look like I am a magician?
+
++ *
+% does it look like i am a magician
+* <star> == yes => You're hilarious.
+* <star> == no => Good.
+* <star> != yes && <star> != no => What?
+
++ google * [*]
+- Google search: http://lmgtfy.com/?q=<star1>
+^ \n\nI hoped this helped you google for yourself next time.
+
++ (yes|no)
+- Who are you talking to?
+- What are you saying?
+- Why did you say <star>?

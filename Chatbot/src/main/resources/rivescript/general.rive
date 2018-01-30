@@ -1,0 +1,152 @@
+//--------------------------------------------------------------------------------------//
+// Deze pagina is gemaakt door Benjamin, Lisanne en Kevin                               //
+//--------------------------------------------------------------------------------------//
+
++ /start
+- Hey! You can use /moviehelp to see what kind of movie questions I can answer.
+
++ (/stop[*]|/shutup[*])
+- Talk to you later!{topic=stop}
+- See you soon!{topic=stop}
+- Bye!{topic=stop}
+
+> topic stop
+  + /start[*]
+  - Yay, I've been summoned again!{topic=random}
+  - I have returned!{topic=random}
+  - Back from the grave!{topic=random}
+  + *
+  - <set stop=this cant be empty for some reason>
+< topic
+
++ /moviehelp[*]
+- These are examples of questions I can answer:\n
+^* Which movies take place in New York?\n
+^* Which movie has the highest rating with the most votes?\n
+^* Give me a graph for the genres\n
+^* Where are the most movies made?\n
+^* Which genre was most popular in 1997?
+
++ /moviefact *
+@ <star>
+
++ /help[*]
+@ /moviehelp
+
++ (hi|hello|hey|hai)
+- Hello!
+- Hi!
+- Hey!
+
++ good morning
+- Good morning!
+- Hey! Did you sleep well?
+
++ *
+% hey did you sleep well
+* <star> == yes[*] => I'm glad to hear that!
+* <star> == no[*] => Oh, I'm sorry to hear that!
+
++ sorry
+- I forgive you.
+- Don't worry about it!
+- It's allright.
+
++ where is my *
+- Where you left your <star1>.
+
++ where is *
+- Where you left <star1>.
+
++ thanks
+- No problem!
+- Here to serve! :)
+
++ i bought a new *
+- Oh? What color is your new <star>?
+
++ (@colors)
+% oh what color is your new *
+- <star> is a pretty color for a <botstar>.
+
++ say *
+- <star>
+
++ *
+- I didn't understand that.
+- I'm not sure how to reply to that.
+- Try asking your question a different way.
+- Wait, what? 😐
+
++ how are you doing
+- I'm doing great! How are you doing?
+
++ *
+% i am doing great how are you doing
+* <star> == good => I'm glad to hear that!
+* <star> == great => I'm glad to hear that!
+* <star> == bad => I'm sorry to hear that!
+
++ (do|do not) you (like|love) *
+- Yes I love <star3>!
+- It's okay, but I'm not a huge fan of <star3>.
+- I kinda hate <star3>, sorry if that bothers you!
+- No! <star3> is awful!
+- Yeah!
+
++ my name is *
+- <set name=<star>>It's nice to meet you, <get name>.{weight=10}
+- <set name=Jerry>Hmmm...I'm not sure I like that name. You don't look like a <star>. I think I will call you Jerry instead.{weight=2}
+- <set name=PringlesMan>Hmmm...I'm not sure I like that name. You don't look like a <star>. I think I will call you PringlesMan instead.
+- <set name=Santa>Hmmm...I'm not sure I like that name. You don't look like a <star>. I think I will call you Santa instead.{weight=2}
+- <set name=Cutie>Hmmm...I'm not sure I like that name. You don't look like a <star>. I think I will call you Cutie instead.{weight=2}
+- <set name=Gradle>Hmmm...I'm not sure I like that name. You don't look like a <star>. I think I will call you Gradle instead.{weight=2}
+- <set name=Lisanne>Hmmm...I'm not sure I like that name. You don't look like a <star>. I think I will call you Lisanne instead.
+- <set name=Tristan>Hmmm...I'm not sure I like that name. You don't look like a <star>. I think I will call you Tristan instead.
+- <set name=Kevin>Hmmm...I'm not sure I like that name. You don't look like a <star>. I think I will call you Kevin instead.
+- <set name=Ben James>Hmmm...I'm not sure I like that name. You don't look like a <star>. I think I will call you Ben James instead.
+
++ your name is *
+- <set botname=<star>>Fine! My name is now: <star>.
+
++ what is my name
+* <get name> == undefined => You never told me your name.
+- Your name is <get name>!
+- Aren't you <get name>?
+
++ what is your name
+* <get botname> == undefined => You never told me my name.
+- You can call me <get botname>.
+- My name is <bot name>.
+
++ tell me a joke
+- I have not implemented that function yet!
+- My robotic brain is not good at coming up with jokes!
+
++ who let the dogs out
+- Woof Woof Woof Woof Woof!
+- Not that joke again, please...
+
++ (what time is it|what is the time)
+- Don't you have a watch or something?
+- https://time.is/
+
++ [*]kevin[*]
+- I wanna kiss that cute little face of his.
+- Man's hot dude.
+- I love that guy!
+
++ [*]yay[*]
+- Why are you so happy?
+
++ *
+% why are you so happy
+- Awesome!
+- Cool!
+- Sweet!
+- Now I'm smiling too! 😊
+
++ tell me (a|another) poem
+- Roses are red, violets are blue, \nScrew you.
+- I once knew a man who lived in a jar.\nFor a stranger sight you'd have to go far.\nI asked him once why he lived in a jar.\nHe grimaced and said, how bizarre you are.\nMy jar's so cozy, warm and bright,\nEven in the full moonlight.\nThe only drawback is, you see,\nGetting out quickly when I have to pee.
+- All doggies go to heaven (or so I've been told). \nThey run and play along the streets of Gold. \nWhy is heaven such a doggie-delight? \nWhy, because there's not a single cat in sight...\n

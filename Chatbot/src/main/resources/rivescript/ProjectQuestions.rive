@@ -1,0 +1,145 @@
+//--------------------------------------------------------------------------------------//
+// Deze pagina is gemaakt door Lisanne Volmer met hulp van Kevin Snijder                //
+//--------------------------------------------------------------------------------------//
+
+//vraag 1 (A9)
++ (which|what) (movies|films|film|movie) (take place|are partly filmed|are filmed|takes place|is partly filmed|is filmed) (in|at) *
+- Here are the first 10 I found:\n<call>sql SELECT DISTINCT movies.movietitle, char(10) FROM locations INNER JOIN movies on movies.id = locations.id WHERE fulllocation LIKE '%<star5>%' AND movies.isSerie = 0 LIMIT 10;</call>
+
+//vraag 2(A10)
++ (what|which) (movies|films|movie|film) (are|is) (shot|made) (in|at) (more than one country|multiple countries|multiple places)
+- I can't show you all of them, but here are the 10 with the most different countries: \n<call>sql SELECT DISTINCT title, CHAR(9),CHAR(45),CHAR(9), count(country) as count, CHAR(10) FROM (SELECT DISTINCT a.movietitle as title, b.country as country FROM movies a, locations b WHERE b.movie_id = a.id AND a.isSerie=0) as query GROUP BY title ORDER BY count DESC LIMIT 10;</call>
+
+//vraag 2 (B)
++ (what|which) (series|shows|serie|show) (are|is) (shot|made|filmed) (in|at) (more than one country|multiple countries|multiple places)
+- I can't show you all of them, but here are the 10 with the most different countries: \n<call>sql SELECT DISTINCT title, CHAR(9),CHAR(45),CHAR(9), count(country) as count, CHAR(10) FROM (SELECT DISTINCT a.movietitle as title, b.country as country FROM movies a, locations b WHERE b.movie_id = a.id AND a.isSerie=1) as query GROUP BY title ORDER BY count DESC LIMIT 10;</call>
+
+//Vraag 3 (A19)
++ (which|what) (movie|film) has the (highest|most) (score|rating) (and|with) [at the same time ]the least votes
+- <call>sql SELECT DISTINCT movies.movietitle FROM ratings INNER JOIN movies on movies.id = ratings.id WHERE rating = 10 AND votes = ( SELECT MIN(votes) FROM ratings) LIMIT 1;</call>
+
+//vraag 4
++ (which|what) (movie|film) has the highest rating (with|and) the most [amount of ]votes
+- The movie\n"<call>sql SELECT a.movietitle FROM movies a, ratings b WHERE b.movie_id = a.id AND a.isSerie = 0 ORDER BY b.rating DESC, b.votes DESC limit 1; </call>"\nhas a 10 with<call>sql SELECT b.votes FROM movies a, ratings b WHERE b.movie_id = a.id AND a.isSerie = 0 ORDER BY b.rating DESC, b.votes DESC limit 1;</call> votes!
+
+//vraag 5
++ (which|what) (serie|show) has the highest rating (with|and) the most [amount of ]votes
+- The serie\n<call>sql SELECT a.movietitle FROM movies a, ratings b WHERE b.movie_id = a.id AND a.isSerie = 1 ORDER BY b.rating DESC, b.votes DESC limit 1; </call>\nhas a 10 with <call>sql SELECT b.votes FROM movies a, ratings b WHERE b.movie_id = a.id AND a.isSerie = 1 ORDER BY b.rating DESC, b.votes DESC limit 1;</call> votes!
+
+//vraag 6
++ (which|what) (movies|films|serie|show) (have|has) (the most|the highest amount of) votes
+- Here is a top 10 list of the most voted movies: \n<call>sql SELECT a.movietitle, CHAR(10) FROM movies a, ratings b WHERE b.movie_id = a.id AND a.isSerie = 0 ORDER BY b.votes DESC LIMIT 10;</call>
+
+//vraag 7
++ (which|what) (series|shows|serie|show) (have|has) (the most|the highest amount of) votes
+- Here is a top 10 list of the most voted series:\n<call>sql SELECT a.movietitle, CHAR(10) FROM movies a, ratings b WHERE b.movie_id = a.id AND a.isSerie = 1 ORDER BY b.votes DESC LIMIT 10;</call>
+
+//vraag 8
++ in (which|what) year were the most movies made with the word 'beer' in the (movietitles|title|name)
+- <call>sql SELECT COUNT(movietitle), endyear FROM tijdelijk2 GROUP BY endyear ORDER BY COUNT(movietitle) DESC LIMIT 1;</call>
+
+//vraag 9
++ (which|what) genre is used the most year between 1990 and has the word 'beer' in the (movietitles|title|name)
+- <call>sql SELECT COUNT(movietitle), genre FROM tijdelijk2 GROUP BY genre ORDER BY COUNT(movietitle) DESC LIMIT 1;</call>
+
+//vraag 10 (A21)
++ (which|what) (song|songs) (occurs|is used) the most
+- The song <call>sql SELECT soundtrack, CHAR(9), CHAR(45), CHAR(9), count(*) as nor FROM soundtracks GROUP BY soundtrack HAVING count(*) =(SELECT max(nor) FROM (SELECT soundtrack,count(*) as nor FROM soundtracks GROUP BY soundtrack) sountracks)</call> times!
+
+//vraag 11 Op welke locatie zijn de meeste films opgenomen
++ (in|on) (which|what) (location|locations) are the most (films|movies) (recorded|made)
+- Let me think about that...\n
+^ Found it! Here's the top 10.\n\n<call>sql SELECT a.fulllocation as Location, CHAR(9), CHAR(45), CHAR(9), COUNT(fulllocation) as Count, CHAR(10) FROM locations a, movies b WHERE b.isSerie = 0 AND b.id = a.movie_id GROUP BY Location ORDER BY Count DESC Limit 10;</call>
+
++ where are the most (movies|films) (made|shot)
+- Let me think about that...\n
+^ Found it! Here's the top 10.\n\n<call>sql SELECT a.fulllocation as Location, CHAR(9), CHAR(45), CHAR(9), COUNT(fulllocation) as Count, CHAR(10) FROM locations a, movies b WHERE b.isSerie = 0 AND b.id = a.movie_id GROUP BY Location ORDER BY Count DESC Limit 10;</call>
+
+//vraag 12
++ how (many|much) (movies|films) are made after *
+- <call>sql SELECT COUNT(movietitle) FROM movies WHERE endyear > <star2> AND IsSerie = 0;</call> movies!
+
+//vraag 13
+//Met een land er in (A16)
++ how (many|much) (movies|films) have * in the (title|name) and (come|are) from [the] *
+- <set titlecontains=<star3>><set titlelocation=<star6>>I found <call>sql SELECT count(DISTINCT a.movietitle) as Count FROM movies a, locations b WHERE a.movietitle LIKE '%<star3>%' AND a.isSerie = 0 AND b.fulllocation LIKE '%<star6>' AND a.id=b.movie_id;</call> movies!
+^ \n\nDo you want to see them?
+
++ *
+% [*]do you want to see them
+* <star> == yes => Sure!\n<call>sql SELECT DISTINCT a.movietitle, CHAR(10) FROM movies a, locations b WHERE a.movietitle LIKE '%<get titlecontains>%' AND a.isSerie = 0 AND b.fulllocation LIKE '%<get titlelocation>%' AND a.id=b.movie_id;</call>
+* <star> != yes => Okay!
+
++ (which|what) (movies|films) have * in the (title|name) and (come|are) from [the] *
+- Here you go! \n<call>sql SELECT DISTINCT a.movietitle, CHAR(10) FROM movies a, locations b WHERE a.movietitle LIKE '%<star3>%' AND a.isSerie = 0 AND b.fulllocation LIKE '%<star6>%' AND a.id=b.movie_id;</call>
+
+//Zonder land er in
++ how (many|much) (movies|films) have * in the (title|name)
+- <set titlecontains=<star3>>I found <call>sql SELECT count(DISTINCT a.movietitle) as Count FROM movies a WHERE a.movietitle LIKE '%<star3>%' AND a.isSerie = 0;</call> movies!
+^ \n\nWould you like to see them?
+
++ *
+% [*]would you like to see them
+* <star> == yes => Sure!\n<call>sql SELECT DISTINCT a.movietitle, CHAR(10) FROM movies a WHERE a.movietitle LIKE '%<get titlecontains>%' AND a.isSerie = 0;</call>
+* <star> != yes => Okay!
+
++ (which|what) (movies|films) have * in the (title|name)
+- These ones:\n<call>sql SELECT DISTINCT a.movietitle, CHAR(10) FROM movies a WHERE a.movietitle LIKE '%<get titlecontains>%' AND a.isSerie = 0;</call>
+
+//vraag 14
++ from (which|what) (movies|films|movie|film) (is|are) the production year (not (clear|known)|unknown)
+- I grabbed the first 10 for you!\n\n<call>sql SELECT movietitle, char(10) FROM movies WHERE startyear LIKE '????%' AND endyear LIKE '????%' LIMIT 10;</call>
+
+//vraag 15
++ (which|what) (genre|genres) (was|were) most popular in *
+- Let's see...\nAh, found it!\n\n<call>sql SELECT b.genre as Genre FROM movies as a, genres as b WHERE a.id=b.movie_id AND a.startyear LIKE '<star4>%' GROUP BY Genre ORDER by count(Genre) DESC LIMIT 1;</call>
+
+//vraag 16
++ (in|at) (which|what) year (were|are) the most (shows|series) (made|created|shot|filmed)
+- In <call>sql SELECT startyear FROM movies WHERE isSerie = 1 GROUP BY startyear ORDER BY count(startyear) DESC LIMIT 1;</call> were <call>sql SELECT count(startyear) FROM movies WHERE isSerie = 1 GROUP BY startyear ORDER BY count(startyear) DESC LIMIT 1;</call> series made!
+
++ (in|at) (which|what) year (were|are) the most (movies|films) (made|created|shot|filmed)
+- In <call>sql SELECT startyear FROM movies WHERE isSerie = 0 GROUP BY startyear ORDER BY count(startyear) DESC LIMIT 1;</call> were <call>sql SELECT count(startyear) FROM movies WHERE isSerie = 0 GROUP BY startyear ORDER BY count(startyear) DESC LIMIT 1;</call> movies made!
+
++ (in|at) (which|what) year (were|are) the least (shows|series) (made|created|shot|filmed)
+- In <call>sql SELECT startyear FROM movies WHERE isSerie = 1 GROUP BY startyear ORDER BY count(startyear) ASC LIMIT 1;</call> were <call>sql SELECT count(startyear) FROM movies WHERE isSerie = 1 GROUP BY startyear ORDER BY count(startyear) ASC LIMIT 1;</call> series made!
+
++ (in|at) (which|what) year (were|are) the least (movies|films) (made|created|shot|filmed)
+- In <call>sql SELECT startyear FROM movies WHERE isSerie = 0 GROUP BY startyear ORDER BY count(startyear) ASC LIMIT 1;</call> were <call>sql SELECT count(startyear) FROM movies WHERE isSerie = 0 GROUP BY startyear ORDER BY count(startyear) ASC LIMIT 1;</call> movies made!
+
+//vraag 17 Op welke locatie zijn de meeste series opgenomen voor 2000)?
++ (in|on) (what|which) (locations|location) (were|are) the most (series|shows) (made|created|shot|filmed) before *
+- Here you go!\n\n<call>sql SELECT a.fulllocation as Location, CHAR(9), CHAR(45), CHAR(9), COUNT(fulllocation) as Count, CHAR(10) FROM locations a, movies b WHERE b.endyear < <star7> AND b.isSerie = 1 AND b.id = a.movie_id GROUP BY Location ORDER BY Count DESC Limit 10;</call>
+
+//vraag 18 Op welke locatie zijn de minste series opgenomen voor 2000)?
++ (in|on) (what|which) (locations|location) (were|are) the most (series|shows) (made|created|shot|filmed) before *
+- Here is the answer!\n\n<call>sql SELECT a.fulllocation as Location, CHAR(9), CHAR(45), CHAR(9), COUNT(fulllocation) as Count, CHAR(10) FROM locations a, movies b WHERE b.endyear < <star7> AND b.isSerie = 1 AND b.id = a.movie_id GROUP BY Location ORDER BY Count ASC Limit 10;</call>
+
+//vraag 19 Op welke locatie zijn de minste films opgenomen voor 2000)?
++ (in|on) (what|which) (locations|location) (were|are) the most (films|movies) (made|created|shot|filmed) before *
+- Here is the answer!\n\n<call>sql SELECT a.fulllocation as Location, CHAR(9), CHAR(45), CHAR(9), COUNT(fulllocation) as Count, CHAR(10) FROM locations a, movies b WHERE b.endyear < <star7> AND b.isSerie = 0 AND b.id = a.movie_id GROUP BY Location ORDER BY Count ASC Limit 10;</call>
+
+//vraag 20 Op welke locatie zijn de meeste films opgenomen voor 2000)?
++ (in|on) (what|which) (locations|location) (were|are) the most (films|movies) (made|created|shot|filmed) before *
+- Here is the answer!\n\n<call>sql SELECT a.fulllocation as Location, CHAR(9), CHAR(45), CHAR(9), COUNT(fulllocation) as Count, CHAR(10) FROM locations a, movies b WHERE b.endyear < <star7> AND b.isSerie = 0 AND b.id = a.movie_id GROUP BY Location ORDER BY Count DESC Limit 10;</call>
+
+//Vraag 21 (zelf bedacht) Welke ratings worden het meest aan films gegeven?
++ (which|what) (are|is) the most (given|common) (ratings|rating) for (movies|films|a movie|a film)?
+- <call>r ratings-plot.R</call>
+^ <call>image Chatbot/src/main/resources/img/ratingsplot.png</call>
+
+// Vraag 22 Wat zijn de meest populaire genres over tijd?
++ what are the most popular genres over time
+- Here are the most popular 8 genres over time.
+^ <call>r genres-over-time.R</call>
+^ <call>image Chatbot/src/main/resources/img/chart-genres.png</call>
+
+//visualisatie B6. maak een visualisatie Maak een visuele weergave van het aantal malen dat een bepaald getal in een filmtitel voorkomt. Bonus: kijk of de Wet van Benford geldt.
++ show all movies with numbers in their title
+- <call>r movietitle.R</call>
+^ <call>image Chatbot/src/main/resources/img/numbersinmovietitle.png</call>
+
+//Rmodel C7. maak een model in R waarmee je kunt nagaan dat franse films minder vaak genre action en horror hebben dan films uit de USA
++ do french movies or movies out of the usa have more movies in the genres action (and|or) horror
+- <call>r model.R</call>
+^ <call>image Chatbot/src/main/resources/img/model.png</call>

@@ -1,3 +1,8 @@
+//-------------------------------------------------------//
+// Deze pagina is gemaakt door Kevin Snijder
+// Spoiler alert: de hele parser is gemaakt door mij! :)
+//-------------------------------------------------------//
+
 package com.groep2.Parser;
 
 import java.io.BufferedWriter;

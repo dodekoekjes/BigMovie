@@ -1,6 +1,11 @@
+//-------------------------------------------------------//
+// Deze pagina is gemaakt door Kevin Snijder             //
+// Spoiler alert: de hele parser is gemaakt door mij! :) //
+// Hulp met de regex ontvangen van alle groepsleden.     //
+//-------------------------------------------------------//
+
 package com.groep2.Parser;
 
-import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +22,7 @@ class Controller {
         String regexSound = "(# (.+?)\\((.{4,18}?)\\)(.+|))|(- (.+))|#(\\s)";
         String regexMovies = "(.*?) \\((.{4,12}?)\\)(.*)(.{4})";
         String regexLocations = "(.*?)\\s\\((.{4,12})\\)(\\s*)(\\(.{0,24}?\\)|)(\\{.*\\}|)(\\s*)(.*?\\b\\s\\(.*\\)|.*)";
-        String regexGenres = "(.*?)(\\s*)\\((.*?)\\)(\\s*)(\\(.*\\)|)(\\{.*\\}|)(.*)";
+        String regexGenres = "(.*)(\\s*)\\((.*?)\\)(\\s*)(\\(.*\\)|)(\\{.*\\}|)(.*)";
 
         //De naam van de list, list moet in resources.
         String ratingsFile =    "ratings.list";

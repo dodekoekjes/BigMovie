@@ -1,3 +1,8 @@
+//-------------------------------------------------------//
+// Deze pagina is gemaakt door Kevin Snijder
+// Spoiler alert: de hele parser is gemaakt door mij! :)
+//-------------------------------------------------------//
+
 package com.groep2.Parser;
 
 import java.io.*;
@@ -19,18 +24,18 @@ public class DatabaseHandler {
             conn = DriverManager.getConnection( url, "root", "fietsbel" );
             System.out.println("database connection success.");
         } catch (SQLException e) {
-            System.out.println("database connection failed.");
+            System.out.println("database connection failed: "+e);
         }
         stmt = conn.createStatement();
     }
     static void createTables() throws SQLException {
         //Reset database
         String sql = "DROP TABLE IF EXISTS " +
-                //"ratings, " +
-                "locations, " +
-                "soundtracks " +
-                //"genres," +
-                //"movies" +
+                "ratings," +
+                "locations," +
+                "soundtracks," +
+                "genres," +
+                "movies" +
                 ";";
         stmt.executeUpdate(sql);
         System.out.println("database rebuild started.\nDO NOT STOP THE PARSER AFTER THIS MESSAGE!\ndeleted all tables.");
@@ -85,7 +90,7 @@ public class DatabaseHandler {
         stmt.executeUpdate(sql);
         System.out.println("created new ratings table.");
 
-        List<String> addToDatabase = Arrays.asList("locations");
+        List<String> addToDatabase = Arrays.asList("movies","locations","ratings","soundtracks","genres");
         writeToDB(addToDatabase);
     }
 
@@ -95,7 +100,7 @@ public class DatabaseHandler {
         for (int i=0; i<csvFiles.size(); i++){
             System.out.println("building "+ csvFiles.get(i)+" query...");
 
-            String csvFile = "Parser/src/main/resources/output/csv/"+ csvFiles.get(i) + ".csv";
+            String csvFile = "Parser/src/main/resources/output/"+ csvFiles.get(i) + ".csv";
             BufferedReader br = null;
             String line = "";
             String add = "";
@@ -111,9 +116,6 @@ public class DatabaseHandler {
             int votes = 0;
             double rating = 0.0;
             int movie_id = 0;
-
-            //Nodig voor genres
-            StringBuilder items = new StringBuilder();
 
             //Skip alle "top" ratings/genres
             Boolean skipped = false;
@@ -179,7 +181,6 @@ public class DatabaseHandler {
                                     add = "(NULL,"+movie_id+","+votes+","+averageRating+"),";
                                     query.append(add);
                                     if(movie_id % 2000 == 0){
-                                        System.out.println("Now at movie ID: "+movie_id);
                                         Double percentage = round((((movie_id*1.0)/1324000)*100),2);
                                         System.out.println(percentage +"% done with ratings.csv");
                                     }
@@ -207,39 +208,26 @@ public class DatabaseHandler {
                             }
                         }
                         else if(skipped){
-                            //Als de titel hetzelfde is als de vorige
-                            if(current[0].equals(title)){
-                                //Als dit genre nog niet in de lijst staat
-                                if(items.indexOf(current[2])==-1){
-                                    //Voeg hem dan toe aan de lijst met genres
-                                    items.append(current[2]+" ");
-                                }
+                            //Reset gegevens
+                            String sql = "SELECT id FROM movies WHERE movietitle = \""+clean(current[0])+"\"";
+                            ResultSet rs = stmt.executeQuery(sql);
+                            if(rs.next()) {
+                                movie_id = rs.getInt("id");
                             }
-                            //Anders plaats je de vorige in de database en maak je een nieuwe set aan
-                            else{
-                                if (!title.equals("")){
-                                    add = "(NULL,"+movie_id+",\""+clean(items.toString())+"\"),";
-                                    query.append(add);
-                                    if(movie_id % 2000 == 0){
-                                        System.out.println("Now at movie ID: "+movie_id);
-                                        Double percentage = round((((movie_id*1.0)/1324000)*100),2);
-                                        System.out.println(percentage +"% done with genres.csv");
-                                    }
+
+                            add = "(NULL,"+movie_id+",\""+clean(current[2])+"\"),";
+                            if (query.indexOf(add)==-1){
+                                query.append(add);
+                                if(movie_id % 2000 == 0){
+                                    Double percentage = round((((movie_id*1.0)/1324000)*100),2);
+                                    System.out.println(percentage +"% done with genres.csv");
                                 }
-                                //Reset gegevens
-                                String sql = "SELECT id FROM movies WHERE movietitle = \""+clean(current[0])+"\"";
-                                ResultSet rs = stmt.executeQuery(sql);
-                                items = new StringBuilder();
-                                if(rs.next()) {
-                                    movie_id = rs.getInt("id");
-                                }
-                                title = current[0];
-                                items.append(current[2]+" ");
                             }
                         }
                     }
                     //locations file
                     if(csvFiles.get(i).equals("locations")){
+                        //Reset gegevens
                         String sql = "SELECT id FROM movies WHERE movietitle = \""+clean(current[0])+"\"";
                         ResultSet rs = stmt.executeQuery(sql);
                         if(rs.next()) {
@@ -259,43 +247,82 @@ public class DatabaseHandler {
                             country = bits[0];
                         }
                         add = "(NULL,"+movie_id+",\""+cleanedLocation+"\",\""+clean(country)+"\"),";
-                        //Als hij nog niet in de lijst staat
-                        if(query.indexOf(add)==-1){
-                            //Voeg hem toe
+                        if (query.indexOf(add)==-1){
                             query.append(add);
-                            System.out.println(add);
-                            if(movie_id % 2000 == 0){
-                                System.out.println("Now at movie ID: "+movie_id);
+                            if(movie_id % 2001 == 0){
                                 Double percentage = round((((movie_id*1.0)/1324000)*100),2);
                                 System.out.println(percentage +"% done with locations.csv");
                             }
                         }
+
+
+//                        String sql = "SELECT id FROM movies WHERE movietitle = \""+clean(current[0])+"\"";
+//                        ResultSet rs = stmt.executeQuery(sql);
+//                        if(rs.next()) {
+//                            movie_id = rs.getInt("id");
+//                        }
+//
+//                        String cleanedLocation = clean(current[2].replaceAll("\\(.*?\\)",""));
+//                        String country = "";
+//                        String[] bits = cleanedLocation.split(",");
+//                        if (bits.length>1){
+//                            country=bits[bits.length-1];
+//                        }
+//                        else if(bits.length==0){
+//                            System.out.println("Empty country found somehow");
+//                        }
+//                        else {
+//                            country = bits[0];
+//                        }
+//                        add = "(NULL,"+movie_id+",\""+cleanedLocation+"\",\""+clean(country)+"\"),";
+//                        //Als hij nog niet in de lijst staat
+//                        if(query.indexOf(add)==-1){
+//                            //Voeg hem toe
+//                            query.append(add);
+//                            System.out.println(add);
+//                            if(movie_id % 2000 == 0){
+//                                System.out.println("Now at movie ID: "+movie_id);
+//                                Double percentage = round((((movie_id*1.0)/1324000)*100),2);
+//                                System.out.println(percentage +"% done with locations.csv");
+//                            }
+//                        }
                     }
-                    //soundtracks file NOG NIET GOED
+                    //soundtracks file
                     else if(csvFiles.get(i).equals("soundtracks")){
-                        String movietitle = clean(current[0]);
-                        String releaseyear = clean(current[1]);
-                        StringBuilder songs = new StringBuilder();
-                        query.append("(NULL,\""+movietitle+"\",\""+releaseyear+"\",\"");
-
-                        for(int c=2; c<10000; c++){
-                            try{
-                                if (c==2){
-                                    songs.append(clean(current[c]));
-                                }
-
-                                else if(current[c]!=null){
-                                    if (songs.indexOf(clean(current[c]))==-1){
-                                        songs.append("," + clean(current[c]));
-                                    }
-                                }
-                            }
-                            catch (ArrayIndexOutOfBoundsException e){
-                                break;
-                            }
-                            if(c==9999){System.out.println("Limit reached");}
+                        //Reset gegevens
+                        String sql = "SELECT id FROM movies WHERE movietitle = \""+clean(current[0])+"\"";
+                        ResultSet rs = stmt.executeQuery(sql);
+                        if(rs.next()) {
+                            movie_id = rs.getInt("id");
                         }
-                        query.append(songs.toString()+"\"),");
+
+                        add = "(NULL,\""+movie_id+"\",\""+clean(current[2])+"\"),";
+                        if (query.indexOf(add)==-1){
+                            query.append(add);
+                            if(movie_id % 2000 == 0){
+                                Double percentage = round((((movie_id*1.0)/1324000)*100),2);
+                                System.out.println(percentage +"% done with soundtracks.csv");
+                            }
+                        }
+
+//                        for(int c=2; c<10000; c++){
+//                            try{
+//                                if (c==2){
+//                                    songs.append(clean(current[c]));
+//                                }
+//
+//                                else if(current[c]!=null){
+//                                    if (songs.indexOf(clean(current[c]))==-1){
+//                                        songs.append("," + clean(current[c]));
+//                                    }
+//                                }
+//                            }
+//                            catch (ArrayIndexOutOfBoundsException e){
+//                                break;
+//                            }
+//                            if(c==9999){System.out.println("Limit reached");}
+//                        }
+//                        query.append(songs.toString()+"\"),");
                     }
                 }
 

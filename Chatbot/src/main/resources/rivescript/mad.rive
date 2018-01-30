@@ -1,0 +1,51 @@
+//--------------------------------------------------------------------------------------//
+// Deze pagina is gemaakt door Kevin                                                    //
+//--------------------------------------------------------------------------------------//
+
++ [*] (fuck|screw|die|cunt|fag) [*]
+- Hey, don't be rude!
+- Watch your language!
+- Do you kiss your mother with that mouth?
+- Excuse me? Apologise please.{topic=sorry}
+
++ i hate you
+- You're really mean! I'm not talking again until you apologize.{topic=sorry}
+
++ i do not like *
+- Why don't you like <star>?
+- What's wrong with <star>?
+
++ *
+% why do not you like *
+% what is wrong with *
+- But I love <botstar>, say sorry!{topic=sorry}
+- I agree with you, <botstar> is not great.
+
++ *
+% what is wrong with *
+- Screw you! I love <botstar>, say sorry!{topic=sorry}
+- I agree with you, <botstar> is trash.
+
++ [*]lisanne[*]
+- Why did you say her name?
+
++ *
+% why did you say her name
+- That is a terrible reason! Don't ever mention that name to me again!
+- That is the most stupid reason I've ever heard, say sorry for saying her name!{topic=sorry}
+
+> topic sorry
+  + sorry [*]
+  - It's OK, I'll forgive you!{topic=random}
+  - Fine then, but hold it in next time!{topic=random}
+  - Hmm, it's allright.{topic=random}
+
+  + /stop
+  - I'm not stopping untill you say sorry!
+
+  + *
+  - Nope, not until you apologize.
+  - Say you're sorry!
+  - Apologize!
+  - I'm not helping you untill you say sorry!
+< topic

@@ -1,5 +1,0 @@
-cars <- c(1, 2, 3, 4, 5, 5, 5, 4, 3, 2, 1)
-png('Chatbot/resources/r/test.png')
-plot(cars, type="o", col="blue")
-title(main="Grafiekje", col.main="red", font.main=4)
-dev.off()
